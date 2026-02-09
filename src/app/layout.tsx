@@ -21,12 +21,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${teko.variable} ${montserrat.variable}`}>
+    <html lang="en" className={`${teko.variable} ${montserrat.variable} overflow-x-hidden`}>
       <body
-        className="bg-black text-white antialiased font-montserrat relative"
+        className="bg-black text-white antialiased font-montserrat relative overflow-x-hidden"
       >
         {/* --- Background Decorative Glows --- */}
-        <div className="absolute inset-0 z-0 pointer-events-none">
+        {/* <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
           <motion.div 
             animate={{
               x: [0, 100, 0],
@@ -46,8 +46,8 @@ export default function RootLayout({
             className="absolute bottom-[-10%] right-[-10%] w-[60%] h-[60%] rounded-full bg-purple-600/15 blur-[120px]" 
           />
           <div className="absolute top-[20%] right-[10%] w-[30%] h-[30%] rounded-full bg-emerald-500/10 blur-[100px]" />
-        </div>
-        
+        </div> */}
+
         <Header />
         {children}
       </body>

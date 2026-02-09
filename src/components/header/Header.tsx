@@ -10,7 +10,7 @@ const Header = () => {
   return (
     <>
       <motion.header
-      initial={false}
+        initial={false}
         className="fixed top-6 left-1/2 -translate-x-1/2 z-50 w-[95%] max-w-7xl"
       >
         <nav className="glass-header flex items-center justify-between px-6 md:px-8 py-2 md:py-3 relative z-0">
