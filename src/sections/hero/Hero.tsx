@@ -7,7 +7,7 @@ const Hero = () => {
       {/* Background Video with Dark Overlay */}
       <video
         className="absolute inset-0 h-full w-full object-cover brightness-50 z-0"
-        src="/hero-bg-video.mp4"
+        src="https://zfcpieppvs4jlrzs.public.blob.vercel-storage.com/hero-bg-video.mp4"
         autoPlay
         loop
         muted
