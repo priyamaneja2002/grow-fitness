@@ -7,7 +7,7 @@ const Hero = () => {
       {/* Background Video with Dark Overlay */}
       <video
         className="absolute inset-0 h-full w-full object-cover brightness-50 z-0"
-        src="/Hero Section BG Video.mp4"
+        src="/hero-bg-video.mp4"
         autoPlay
         loop
         muted
