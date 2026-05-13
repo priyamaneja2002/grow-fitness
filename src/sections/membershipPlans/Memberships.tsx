@@ -28,7 +28,7 @@ const plans = [
 
 export const PricingSection = () => {
   return (
-    <section className="bg-black py-12 px-6 font-montserrat">
+    <section id="memberships" className="bg-black py-12 px-6 font-montserrat">
       <motion.h2
         initial={{ opacity: 0, y: 24 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -66,8 +66,18 @@ export const PricingSection = () => {
               </ul>
             </div>
             <div className="flex gap-2 max-[1140px]:flex-col max-lg:flex-row">
-              <button className="w-full flex-1 py-2 border border-white text-white font-bold hover:bg-white hover:text-black transition font-montserrat rounded-full cursor-pointer">FREE TRIAL</button>
-              <button className="w-full flex-1 py-2 bg-gymYellow text-black font-bold hover:bg-gymYellow/90 transition font-montserrat rounded-full cursor-pointer">LEARN MORE</button>
+              <button
+                type="button"
+                className="w-full flex-1 py-2 border border-white text-white font-bold hover:bg-white hover:text-black transition font-montserrat rounded-full cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gymYellow focus-visible:ring-offset-2 focus-visible:ring-offset-black"
+              >
+                FREE TRIAL
+              </button>
+              <button
+                type="button"
+                className="w-full flex-1 py-2 bg-gymYellow text-black font-bold hover:bg-gymYellow/90 transition font-montserrat rounded-full cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gymYellow focus-visible:ring-offset-2 focus-visible:ring-offset-black"
+              >
+                LEARN MORE
+              </button>
             </div>
           </motion.div>
         ))}

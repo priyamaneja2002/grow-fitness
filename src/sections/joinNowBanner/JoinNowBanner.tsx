@@ -4,7 +4,7 @@ import Image from "next/image";
 
 const JoinNowBanner = () => {
   return (
-    <section className="font-montserrat bg-transparent">
+    <section id="join-now" className="font-montserrat bg-transparent">
       <div className="mx-auto">
         <div className="relative overflow-hidden  border border-white/10">
           <div className="relative h-[400px] md:h-[500px] lg:h-[580px]">
@@ -40,7 +40,10 @@ const JoinNowBanner = () => {
             />
             <div className="absolute inset-0 bg-black/30" />
             <div className="absolute inset-0 flex items-center px-6 md:px-10">
-              <button className="px-6 py-2 md:px-8 lg:px-10 md:py-3 text-base md:text-lg bg-white text-black font-bold rounded-full uppercase tracking-tight hover:bg-[#f5f5f5] cursor-pointer transition">
+              <button
+                type="button"
+                className="px-6 py-2 md:px-8 lg:px-10 md:py-3 text-base md:text-lg bg-white text-black font-bold rounded-full uppercase tracking-tight hover:bg-[#f5f5f5] cursor-pointer transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gymYellow focus-visible:ring-offset-2 focus-visible:ring-offset-black"
+              >
                 <span className="inline-flex items-center gap-2">
                   Join Now
                   <svg

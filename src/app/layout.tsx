@@ -1,9 +1,8 @@
 "use client";
 import "./globals.css";
 import Header from "@/components/header/Header";
-import { motion } from "framer-motion";
 import { Teko, Montserrat } from "next/font/google";
-import { SpeedInsights } from "@vercel/speed-insights/next"
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const teko = Teko({
   subsets: ["latin"],

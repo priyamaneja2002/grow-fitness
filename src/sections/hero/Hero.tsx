@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 
 const Hero = () => {
   return (
-    <section className="relative h-screen w-full flex flex-col items-center justify-center overflow-hidden bg-black">
+    <section id="hero" className="relative min-h-screen w-full flex flex-col items-center justify-center overflow-hidden bg-black">
       {/* Background Video with Dark Overlay */}
       <video
         className="absolute inset-0 h-full w-full object-cover brightness-50 z-0"
@@ -44,23 +44,25 @@ const Hero = () => {
           transition={{ duration: 0.6, delay: 1.2 }}
           className="flex flex-col md:flex-row gap-6 justify-center items-center"
         >
-          <motion.button
+          <motion.a
+            href="#memberships"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.96 }}
             transition={{ type: "spring", stiffness: 300, damping: 20 }}
-            className="w-64 cursor-pointer py-4 bg-white text-black font-montserrat font-bold text-2xl rounded-full uppercase transform-gpu"
+            className="w-64 cursor-pointer py-4 bg-white text-black font-montserrat font-bold text-lg md:text-xl rounded-full uppercase transform-gpu text-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gymYellow focus-visible:ring-offset-2 focus-visible:ring-offset-black"
           >
             Free Trial
-          </motion.button>
+          </motion.a>
 
-          <motion.button
+          <motion.a
+            href="#join-now"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.96 }}
             transition={{ type: "spring", stiffness: 300, damping: 20 }}
-            className="w-64 cursor-pointer py-4 bg-gymYellow text-black font-montserrat font-bold text-2xl rounded-full uppercase transform-gpu shadow-[0_0_20px_rgba(242,214,75,0.4)]"
+            className="w-64 cursor-pointer py-4 bg-gymYellow text-black font-montserrat font-bold text-lg md:text-xl rounded-full uppercase transform-gpu shadow-[0_0_20px_rgba(242,214,75,0.4)] text-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gymYellow focus-visible:ring-offset-2 focus-visible:ring-offset-black"
           >
             Join Now
-          </motion.button>
+          </motion.a>
         </motion.div>
       </div>
     </section>

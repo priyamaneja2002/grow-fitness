@@ -47,7 +47,7 @@ const ClassesCarousel = ({ slides }: ClassesCarouselProps) => {
         {slides.map((slide) => (
           <SwiperSlide key={slide.title}>
             <div className="relative rounded-lg overflow-hidden border border-white/15 bg-black/40">
-              <div className="relative aspect-[4/5]">
+              <div className="relative aspect-4/5">
                 <Image
                   src={slide.image}
                   alt={slide.title}
@@ -55,7 +55,7 @@ const ClassesCarousel = ({ slides }: ClassesCarouselProps) => {
                   className="object-cover"
                   sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent" />
+                <div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/30 to-transparent" />
                 <div className="absolute bottom-2 right-4">
                   <p className="text-2xl md:text-4xl font-black text-right text-gymYellow leading-tight font-teko z-10">
                     {slide.title}
@@ -68,11 +68,12 @@ const ClassesCarousel = ({ slides }: ClassesCarouselProps) => {
       </Swiper>
 
       <div className="mt-6">
-        <div className="flex items-center gap-4 justify-between">
-          <div className="classes-pagination !h-2 !w-[400px] rounded-full overflow-hidden bg-white/20 !relative" />
+        <div className="flex flex-col md:flex-row items-start md:items-center gap-4 justify-between">
+          <div className="classes-pagination h-2! w-full! md:w-[400px]! rounded-full overflow-hidden bg-white/20 relative!" />
           <div className="flex items-center gap-4">
             <button
-            className="classes-prev w-10 h-10 rounded-full border border-gymYellow text-gymYellow hover:bg-gymYellow hover:text-black transition flex items-center justify-center"
+              type="button"
+              className="classes-prev w-10 h-10 rounded-full border border-gymYellow text-gymYellow hover:bg-gymYellow hover:text-black cursor-pointer transition flex items-center justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gymYellow focus-visible:ring-offset-2 focus-visible:ring-offset-black"
               aria-label="Previous slide"
             >
             <svg
@@ -93,7 +94,8 @@ const ClassesCarousel = ({ slides }: ClassesCarouselProps) => {
             </svg>
             </button>
             <button
-            className="classes-next w-10 h-10 rounded-full border border-gymYellow text-gymYellow hover:bg-gymYellow hover:text-black transition flex items-center justify-center"
+              type="button"
+              className="classes-next w-10 h-10 rounded-full border border-gymYellow text-gymYellow hover:bg-gymYellow hover:text-black cursor-pointer transition flex items-center justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gymYellow focus-visible:ring-offset-2 focus-visible:ring-offset-black"
               aria-label="Next slide"
             >
             <svg
@@ -117,7 +119,10 @@ const ClassesCarousel = ({ slides }: ClassesCarouselProps) => {
         </div>
 
         <div className="flex justify-center mt-6">
-          <button className="px-8 py-3 bg-gymYellow text-black font-bold rounded-full uppercase tracking-tight hover:bg-gymYellow/90 transition">
+          <button
+            type="button"
+            className="px-8 py-3 bg-gymYellow text-black font-bold rounded-full uppercase tracking-tight hover:bg-gymYellow/90 cursor-pointer transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gymYellow focus-visible:ring-offset-2 focus-visible:ring-offset-black"
+          >
             <span className="inline-flex items-center gap-2">
               More Details
               <svg

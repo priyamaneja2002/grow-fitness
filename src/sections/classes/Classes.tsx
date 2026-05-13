@@ -19,7 +19,7 @@ const ClassesCarousel = dynamic<ClassesCarouselProps>(
 
 const ClassesSection = () => {
   return (
-    <section className="bg-black py-20 px-6 font-montserrat">
+    <section id="classes" className="bg-black py-20 px-6 font-montserrat">
       <div className="max-w-7xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
@@ -31,9 +31,9 @@ const ClassesSection = () => {
           <h2 className="text-4xl md:text-6xl lg:text-7xl font-black text-gymYellow uppercase font-teko mb-4">
             Classes
           </h2>
-          <p className="text-white text-lg md:text-2xl font-semibold">
-            Discover a variety of classes at GROW FITNESS, spanning 5 different
-            categories. <br /> <span className="uppercase">You want it, we&apos;ve got it.</span>
+          <p className="text-white text-lg md:text-2xl font-semibold leading-relaxed">
+            Discover a variety of classes at GROW FITNESS, spanning 5 different categories.
+            <span className="block uppercase mt-1">You want it, we&apos;ve got it.</span>
           </p>
         </motion.div>
 

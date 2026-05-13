@@ -54,7 +54,7 @@ const JoinMovementSection = () => {
   }, []);
 
   return (
-    <section ref={sectionRef} className="bg-black py-24 px-6 font-montserrat min-h-screen">
+    <section id="movement" ref={sectionRef} className="bg-black py-24 px-6 font-montserrat min-h-screen">
       <div className="max-w-7xl mx-auto flex flex-col items-center justify-center relative">
         
         {/* TOP ROW: Two Images */}
@@ -109,7 +109,7 @@ const JoinMovementSection = () => {
           </div>
 
           {/* Bottom Center Image */}
-          <div className={`jt-animate mx-auto max-lg:hidden ${bottomRowImages[1].offset ? "md:mb-18" : ""}`}>
+          <div className={`jt-animate mx-auto max-lg:hidden ${bottomRowImages[1].offset ? "md:mb-16" : ""}`}>
             <div className={`relative ${bottomRowImages[1].aspect} rounded-lg overflow-hidden w-80 h-auto`}>
               <Image 
                 src={bottomRowImages[1].src} 
