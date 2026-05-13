@@ -7,6 +7,7 @@ import { FacilitiesSection } from "@/sections/facilities/Facilities";
 import JoinNowBanner from "@/sections/joinNowBanner/JoinNowBanner";
 import { Footer } from "@/components/footer/Footer";
 import ToastHub from "@/components/ui/ToastHub";
+import ProjectNoticeModal from "@/components/ui/ProjectNoticeModal";
 
 export default function Home() {
   return (
@@ -20,6 +21,7 @@ export default function Home() {
       <JoinNowBanner />
       <Footer />
       <ToastHub />
+      <ProjectNoticeModal />
     </>
   );
 }

@@ -7,7 +7,7 @@ import FlipText from "@/components/ui/FlipText";
 const navItems = [
   { label: "Gyms", href: "#facilities" },
   { label: "Classes", href: "#classes" },
-  { label: "Personal Training", href: "#about" },
+  { label: "Personal Training", href: "#personal-training" },
   { label: "Memberships", href: "#memberships" },
 ];
 
