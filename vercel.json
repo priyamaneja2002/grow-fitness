@@ -1,0 +1,7 @@
+{
+  "build": {
+    "env": {
+      "VERCEL_GIT_LFS_ENABLED": "1"
+    }
+  }
+}
