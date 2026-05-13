@@ -30,7 +30,7 @@ export const FacilitiesSection = () => {
             viewport={{ once: true, amount: 0.3 }}
             transition={{ duration: 0.6 }}
             whileHover={{ y: -4 }}
-            className="relative group overflow-hidden border border-zinc-800 rounded-lg"
+            className="relative group overflow-hidden border border-zinc-800 rounded-lg min-h-[250px] sm:min-h-[300px] md:min-h-0 md:h-full"
           >
             <Image 
               src={f.img} 
@@ -47,7 +47,7 @@ export const FacilitiesSection = () => {
             >
               <f.icon size={18} />
             </motion.div>
-            <h3 className="absolute bottom-2 right-4 text-2xl md:text-4xl font-black text-right text-gymYellow leading-tight font-teko z-10">
+            <h3 className="absolute bottom-3 right-3 md:bottom-2 md:right-4 text-xl sm:text-2xl md:text-4xl font-black text-right text-gymYellow leading-tight font-teko z-10">
               {f.title.split(' ').map(word => <span key={word} className="block">{word}</span>)}
             </h3>
           </motion.div>

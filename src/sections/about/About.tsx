@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 
@@ -86,13 +85,6 @@ const StatRing = ({ label, value, suffix }: { label: string; value: number; suff
 };
 
 export const AboutSection = () => {
-  const [sliderPosition, setSliderPosition] = useState(50);
-
-  const updateSlider = (clientX: number, bounds: DOMRect) => {
-    const rawPosition = ((clientX - bounds.left) / bounds.width) * 100;
-    setSliderPosition(Math.max(0, Math.min(100, rawPosition)));
-  };
-
   return (
     <section id="about" className="text-white py-16 px-6 font-montserrat">
       <motion.div 
@@ -138,54 +130,6 @@ export const AboutSection = () => {
             <StatRing key={stat.label} label={stat.label} value={stat.value} suffix={stat.suffix} />
           ))}
         </div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.25 }}
-          transition={{ duration: 0.6, delay: 0.1 }}
-          className="mt-14"
-        >
-          <p className="mb-4 text-sm uppercase tracking-[0.22em] text-white/70">Transformation Preview</p>
-          <div
-            className="relative mx-auto max-w-3xl aspect-video overflow-hidden rounded-xl border border-white/15"
-            onMouseMove={(event) => updateSlider(event.clientX, event.currentTarget.getBoundingClientRect())}
-            onTouchMove={(event) => {
-              const touch = event.touches[0];
-              if (!touch) {
-                return;
-              }
-              updateSlider(touch.clientX, event.currentTarget.getBoundingClientRect());
-            }}
-          >
-            <Image
-              src="/JoinNow03.png"
-              alt="Before transformation"
-              fill
-              className="object-cover"
-              sizes="(max-width: 768px) 100vw, 768px"
-            />
-            <div className="absolute inset-0" style={{ clipPath: `inset(0 ${100 - sliderPosition}% 0 0)` }}>
-              <Image
-                src="/JoinNow04.png"
-                alt="After transformation"
-                fill
-                className="object-cover"
-                sizes="(max-width: 768px) 100vw, 768px"
-              />
-            </div>
-            <motion.div
-              className="absolute inset-y-0 w-0.5 bg-gymYellow"
-              style={{ left: `${sliderPosition}%` }}
-              animate={{ scaleY: [1, 1.03, 1] }}
-              transition={{ duration: 1.6, repeat: Infinity }}
-            >
-              <div className="absolute -left-3 top-1/2 -translate-y-1/2 w-7 h-7 rounded-full bg-gymYellow border border-black shadow-[0_0_14px_rgba(245,215,61,0.7)]" />
-            </motion.div>
-            <div className="absolute left-3 top-3 rounded-md bg-black/60 px-2 py-1 text-xs uppercase tracking-wide">Before</div>
-            <div className="absolute right-3 top-3 rounded-md bg-black/60 px-2 py-1 text-xs uppercase tracking-wide">After</div>
-          </div>
-        </motion.div>
       </motion.div>
     </section>
   );
