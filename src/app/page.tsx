@@ -6,6 +6,7 @@ import ClassesSection from "@/sections/classes/Classes";
 import { FacilitiesSection } from "@/sections/facilities/Facilities";
 import JoinNowBanner from "@/sections/joinNowBanner/JoinNowBanner";
 import { Footer } from "@/components/footer/Footer";
+import ToastHub from "@/components/ui/ToastHub";
 
 export default function Home() {
   return (
@@ -18,6 +19,7 @@ export default function Home() {
       <FacilitiesSection />
       <JoinNowBanner />
       <Footer />
+      <ToastHub />
     </>
   );
 }

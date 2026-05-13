@@ -1,9 +1,55 @@
 "use client";
-import { motion } from "framer-motion";
+import { type ReactNode } from "react";
+import { motion, useMotionValue, useSpring } from "framer-motion";
+import { dispatchToast } from "@/components/ui/ToastHub";
+
+const MagneticButton = ({
+  href,
+  children,
+  className,
+  toastMessage,
+}: {
+  href: string;
+  children: ReactNode;
+  className: string;
+  toastMessage: string;
+}) => {
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+  const springX = useSpring(x, { stiffness: 240, damping: 16, mass: 0.2 });
+  const springY = useSpring(y, { stiffness: 240, damping: 16, mass: 0.2 });
+
+  return (
+    <motion.a
+      href={href}
+      style={{ x: springX, y: springY }}
+      onMouseMove={(event) => {
+        const bounds = event.currentTarget.getBoundingClientRect();
+        const offsetX = event.clientX - (bounds.left + bounds.width / 2);
+        const offsetY = event.clientY - (bounds.top + bounds.height / 2);
+        x.set(offsetX * 0.2);
+        y.set(offsetY * 0.2);
+      }}
+      onMouseLeave={() => {
+        x.set(0);
+        y.set(0);
+      }}
+      onClick={() => dispatchToast(toastMessage)}
+      whileTap={{ scale: 0.96 }}
+      transition={{ type: "spring", stiffness: 320, damping: 22 }}
+      className={className}
+    >
+      {children}
+    </motion.a>
+  );
+};
 
 const Hero = () => {
   return (
-    <section id="hero" className="relative min-h-screen w-full flex flex-col items-center justify-center overflow-hidden bg-black">
+    <section
+      id="hero"
+      className="relative min-h-screen w-full flex flex-col items-center justify-center overflow-hidden bg-black"
+    >
       {/* Background Video with Dark Overlay */}
       <video
         className="absolute inset-0 h-full w-full object-cover brightness-50 z-0"
@@ -13,7 +59,6 @@ const Hero = () => {
         muted
         playsInline
       />
-
       <div className="relative z-10 text-center px-4 max-w-5xl">
         {/* Main Heading */}
         <div className="overflow-hidden">
@@ -44,25 +89,21 @@ const Hero = () => {
           transition={{ duration: 0.6, delay: 1.2 }}
           className="flex flex-col md:flex-row gap-6 justify-center items-center"
         >
-          <motion.a
+          <MagneticButton
             href="#memberships"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.96 }}
-            transition={{ type: "spring", stiffness: 300, damping: 20 }}
+            toastMessage="Free trial flow started."
             className="w-64 cursor-pointer py-4 bg-white text-black font-montserrat font-bold text-lg md:text-xl rounded-full uppercase transform-gpu text-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gymYellow focus-visible:ring-offset-2 focus-visible:ring-offset-black"
           >
             Free Trial
-          </motion.a>
+          </MagneticButton>
 
-          <motion.a
+          <MagneticButton
             href="#join-now"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.96 }}
-            transition={{ type: "spring", stiffness: 300, damping: 20 }}
-            className="w-64 cursor-pointer py-4 bg-gymYellow text-black font-montserrat font-bold text-lg md:text-xl rounded-full uppercase transform-gpu shadow-[0_0_20px_rgba(242,214,75,0.4)] text-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gymYellow focus-visible:ring-offset-2 focus-visible:ring-offset-black"
+            toastMessage="You are on the Join Now section."
+            className="w-64 cursor-pointer py-4 bg-gymYellow text-black font-montserrat font-bold text-lg md:text-xl rounded-full uppercase transform-gpu shadow-[0_0_20px_rgba(242,214,75,0.4)] text-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gymYellow focus-visible:ring-offset-2 focus-visible:ring-offset-black animate-pulse-soft"
           >
             Join Now
-          </motion.a>
+          </MagneticButton>
         </motion.div>
       </div>
     </section>

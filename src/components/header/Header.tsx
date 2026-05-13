@@ -1,6 +1,8 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { dispatchToast } from "@/components/ui/ToastHub";
+import FlipText from "@/components/ui/FlipText";
 
 const navItems = [
   { label: "Gyms", href: "#facilities" },
@@ -11,6 +13,10 @@ const navItems = [
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isCompact, setIsCompact] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
+  const [activeSection, setActiveSection] = useState("hero");
+  const lastScrollY = useRef(0);
   const closeMenu = () => setIsMenuOpen(false);
 
   useEffect(() => {
@@ -33,13 +39,69 @@ const Header = () => {
     };
   }, [isMenuOpen]);
 
+  useEffect(() => {
+    const onScroll = () => {
+      const currentY = window.scrollY;
+      const movingDown = currentY > lastScrollY.current;
+      const passedThreshold = currentY > 80;
+
+      setIsCompact(currentY > 24);
+      setIsVisible(!movingDown || !passedThreshold);
+      lastScrollY.current = currentY;
+    };
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  useEffect(() => {
+    const sectionIds = ["hero", ...navItems.map((item) => item.href.replace("#", ""))];
+    const sectionElements = sectionIds
+      .map((id) => document.getElementById(id))
+      .filter((section): section is HTMLElement => Boolean(section));
+
+    if (!sectionElements.length) {
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const intersecting = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+
+        if (intersecting[0]?.target.id) {
+          setActiveSection(intersecting[0].target.id);
+        }
+      },
+      {
+        rootMargin: "-40% 0px -45% 0px",
+        threshold: [0.2, 0.4, 0.6],
+      }
+    );
+
+    sectionElements.forEach((section) => observer.observe(section));
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <>
       <motion.header
         initial={false}
+        animate={{
+          y: isVisible ? 0 : -90,
+          scale: isCompact ? 0.97 : 1,
+          opacity: isVisible ? 1 : 0.92,
+        }}
+        transition={{ type: "spring", stiffness: 180, damping: 24 }}
         className="fixed top-4 md:top-6 left-1/2 -translate-x-1/2 z-50 w-[95%] max-w-7xl"
       >
-        <nav className="glass-header flex items-center justify-between px-6 md:px-8 py-2 md:py-3 relative z-0">
+        <nav
+          className={`glass-header flex items-center justify-between px-6 md:px-8 relative z-0 transition-all duration-300 ${
+            isCompact ? "py-1.5 md:py-2" : "py-2 md:py-3"
+          }`}
+        >
           {/* Logo/Icon */}
           <a
             href="#hero"
@@ -62,13 +124,24 @@ const Header = () => {
           </a>
 
           {/* Nav Links (desktop) */}
-          <ul className="hidden lg:flex gap-8 text-white font-montserrat font-semibold md:text-lg text-sm tracking-widest uppercase">
+          <ul className="hidden lg:flex gap-8 text-white font-montserrat font-semibold md:text-lg text-sm tracking-widest uppercase relative">
             {navItems.map((item) => (
               <li key={item.label}>
                 <a
                   href={item.href}
-                  className="hover:text-gymYellow transition-colors rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gymYellow focus-visible:ring-offset-2 focus-visible:ring-offset-black"
+                  className={`relative px-2 py-1 rounded-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gymYellow focus-visible:ring-offset-2 focus-visible:ring-offset-black ${
+                    activeSection === item.href.replace("#", "")
+                      ? "text-gymYellow"
+                      : "hover:text-gymYellow"
+                  }`}
                 >
+                  {activeSection === item.href.replace("#", "") && (
+                    <motion.span
+                      layoutId="active-nav-pill"
+                      className="absolute inset-0 rounded-full bg-gymYellow/10 border border-gymYellow/40 -z-10"
+                      transition={{ type: "spring", stiffness: 280, damping: 28 }}
+                    />
+                  )}
                   {item.label}
                 </a>
               </li>
@@ -78,12 +151,15 @@ const Header = () => {
           {/* Right-side actions: Join button + mobile menu toggle */}
           <div className="flex items-center gap-4">
             {/* Join Now Button */}
-            <a
+            <motion.a
               href="#join-now"
+              onClick={() => dispatchToast("Jumping to Join Now.")}
+              animate={{ scale: [1, 1.04, 1] }}
+              transition={{ duration: 2.6, repeat: Infinity, ease: "easeInOut" }}
               className="relative animate-gradient-text font-montserrat font-bold text-base md:text-lg uppercase tracking-tighter cursor-pointer transition-all duration-300 rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gymYellow focus-visible:ring-offset-2 focus-visible:ring-offset-black after:content-[''] after:absolute after:left-0 after:bottom-0 after:h-[2px] after:w-0 after:bg-linear-to-r after:from-yellow-300 after:via-gymYellow after:to-yellow-400 after:transition-all after:duration-300 hover:after:w-full"
             >
               Join Now
-            </a>
+            </motion.a>
 
             {/* Hamburger / Close (mobile only) */}
             <button
@@ -169,9 +245,9 @@ const Header = () => {
               <button
                 type="button"
                 onClick={closeMenu}
-                className="mt-4 text-sm text-white/70 hover:text-white font-montserrat tracking-widest uppercase rounded-sm cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gymYellow focus-visible:ring-offset-2 focus-visible:ring-offset-black"
+                className="group mt-4 text-sm text-white/70 hover:text-white font-montserrat tracking-widest uppercase rounded-sm cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gymYellow focus-visible:ring-offset-2 focus-visible:ring-offset-black"
               >
-                Close
+                <FlipText text="Close" />
               </button>
             </motion.nav>
           </motion.div>
