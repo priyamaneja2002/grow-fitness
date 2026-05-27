@@ -1,7 +1,27 @@
 "use client";
-import { type ReactNode } from "react";
+import { type ReactNode, useEffect, useState } from "react";
 import { motion, useMotionValue, useSpring } from "framer-motion";
 import { dispatchToast } from "@/components/ui/ToastHub";
+
+const HERO_BLOB_VIDEO =
+  "https://zfcpieppvs4jlrzs.public.blob.vercel-storage.com/hero-bg-video.mp4";
+const HERO_FALLBACK_IMAGE = "/facilities-equipment.png";
+
+async function isBlobVideoReachable(): Promise<boolean> {
+  try {
+    const response = await fetch(HERO_BLOB_VIDEO, { method: "HEAD" });
+    if (response.ok) {
+      return true;
+    }
+    // Some hosts reject HEAD but still serve GET — try the video element + onError.
+    if (response.status === 405) {
+      return true;
+    }
+    return false;
+  } catch {
+    return false;
+  }
+}
 
 const MagneticButton = ({
   href,
@@ -44,25 +64,63 @@ const MagneticButton = ({
   );
 };
 
+const HeroBackground = ({
+  useVideo,
+  onVideoError,
+}: {
+  useVideo: boolean;
+  onVideoError: () => void;
+}) => (
+  <div className="absolute inset-0 z-0" aria-hidden>
+    {/* eslint-disable-next-line @next/next/no-img-element */}
+    <img
+      src={HERO_FALLBACK_IMAGE}
+      alt=""
+      className={`absolute inset-0 h-full w-full object-cover brightness-50 ${
+        useVideo ? "opacity-0 pointer-events-none" : "opacity-100"
+      }`}
+    />
+    {useVideo && (
+      <video
+        className="absolute inset-0 h-full w-full object-cover brightness-50"
+        src={HERO_BLOB_VIDEO}
+        autoPlay
+        loop
+        muted
+        playsInline
+        onError={onVideoError}
+      />
+    )}
+  </div>
+);
+
 const Hero = () => {
+  const [useVideo, setUseVideo] = useState(false);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    isBlobVideoReachable().then((reachable) => {
+      if (!cancelled && reachable) {
+        setUseVideo(true);
+      }
+    });
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
   return (
     <section
       id="hero"
       className="relative min-h-screen w-full flex flex-col items-center justify-center overflow-hidden bg-black"
     >
-      {/* Background Video with Dark Overlay */}
-      <video
-        className="absolute inset-0 h-full w-full object-cover brightness-50 z-0"
-        src="https://zfcpieppvs4jlrzs.public.blob.vercel-storage.com/hero-bg-video.mp4"
-        autoPlay
-        loop
-        muted
-        playsInline
-      />
+      <HeroBackground useVideo={useVideo} onVideoError={() => setUseVideo(false)} />
       <div className="relative z-10 text-center px-4 max-w-5xl">
         {/* Main Heading */}
         <div className="overflow-hidden">
-          <motion.h1 
+          <motion.h1
             initial={{ y: 300, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ type: "spring", stiffness: 100, damping: 20, delay: 0.2 }}
@@ -83,7 +141,7 @@ const Hero = () => {
         </motion.p>
 
         {/* CTA Buttons */}
-        <motion.div 
+        <motion.div
           initial={{ y: 30, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.6, delay: 1.2 }}
